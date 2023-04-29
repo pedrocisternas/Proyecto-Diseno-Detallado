@@ -1,0 +1,118 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDeal/RawDeal.csproj": {}
+  },
+  "projects": {
+    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDeal/RawDeal.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDeal/RawDeal.csproj",
+        "projectName": "RawDeal",
+        "projectPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDeal/RawDeal.csproj",
+        "packagesPath": "/Users/pedrocisternas/.nuget/packages/",
+        "outputPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDeal/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/pedrocisternas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/RawDealView.csproj": {
+                "projectPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/RawDealView.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.407/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/RawDealView.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/RawDealView.csproj",
+        "projectName": "RawDealView",
+        "projectPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/RawDealView.csproj",
+        "packagesPath": "/Users/pedrocisternas/.nuget/packages/",
+        "outputPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal4/RawDealView/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/pedrocisternas/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.407/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
