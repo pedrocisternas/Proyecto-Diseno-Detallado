@@ -31,16 +31,21 @@ public class Game
     }
     private bool InitializeGame()
     {
-        string deckPath1 = _view.AskUserToSelectDeck(_deckFolder);
-        Player player1 = CreatePlayerWithValidDeck(deckPath1);
+        Player player1 = CreatePlayer();
         if (player1 == null) return false;
 
-        string deckPath2 = _view.AskUserToSelectDeck(_deckFolder);
-        Player player2 = CreatePlayerWithValidDeck(deckPath2);
+        Player player2 = CreatePlayer();
         if (player2 == null) return false;
 
         SetPlayers(player1, player2);
         return true;
+    }
+    
+    private Player CreatePlayer()
+    {
+        string deckPath = _view.AskUserToSelectDeck(_deckFolder);
+        Player player = CreatePlayerWithValidDeck(deckPath);
+        return player;
     }
     private Player CreatePlayerWithValidDeck(string deckPath)
     {

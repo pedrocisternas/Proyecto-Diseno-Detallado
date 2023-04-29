@@ -20,21 +20,18 @@ public class DeckValidator
 
     private bool HasMixedAlignmentCards(List<NormalCard> deck)
     {
-        bool hasHeelCard = false;
-        bool hasFaceCard = false;
+        bool hasHeelCard = HasHeelCard(deck);
+        bool hasFaceCard = HasFaceCard(deck);
 
+        return hasHeelCard && hasFaceCard;
+    }
+
+    
+    private bool HasHeelCard(List<NormalCard> deck)
+    {
         foreach (NormalCard card in deck)
         {
             if (card.Subtypes.Contains("Heel"))
-            {
-                hasHeelCard = true;
-            }
-            else if (card.Subtypes.Contains("Face"))
-            {
-                hasFaceCard = true;
-            }
-
-            if (hasHeelCard && hasFaceCard)
             {
                 return true;
             }
@@ -42,6 +39,20 @@ public class DeckValidator
 
         return false;
     }
+
+    private bool HasFaceCard(List<NormalCard> deck)
+    {
+        foreach (NormalCard card in deck)
+        {
+            if (card.Subtypes.Contains("Face"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private bool IsValidCardCount(List<NormalCard> deck)
     {
