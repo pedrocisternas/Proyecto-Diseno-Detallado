@@ -43,18 +43,24 @@ public class Player
     public List<NormalCard> GetRingsideCards() => Ringside;
     public NormalCard GetACardFromRingside(int index) => Ringside[index];
     public void RemoveCardFromRingside(NormalCard card) => Ringside.Remove(card);
-    public void RemoveCardFromRingsideByIndex(int index) => Ringside.RemoveAt(index);
     public void AddCardToRingside(NormalCard card) => Ringside.Add(card);
     public List<NormalCard> GetRingAreaCards() => RingArea;
     public void AddCardToRingArea(NormalCard card) => RingArea.Add(card);
-    public bool PlayerCanUseAbilityAndNeedsMenu(Player opponentPlayer) =>
-        !HasUsedAbilityThisTurn && SuperstarCard.Ability.CanUseAbility(this, opponentPlayer) && !SuperstarCard.Ability.IsAutomatic();
+
+    public bool PlayerCanUseAbilityAndNeedsMenu(Player opponentPlayer)
+    {
+        return !HasUsedAbilityThisTurn && SuperstarCard.Ability.CanUseAbility(this, opponentPlayer) && !SuperstarCard.Ability.IsAutomatic();
+    }
+        
+        
     public void ExecuteAbility(Player opponentPlayer, View view)
     {
         SuperstarCard.Ability.Execute(this, opponentPlayer, view);
         HasUsedAbilityThisTurn = true;
     }
     public void EndTurn() => HasUsedAbilityThisTurn = false;
+    
+    // Ver si puedo sacar el retorno bool en estas dos funciones (ya que están en negro)
     public bool DrawStartingCards()
     {
         for (int i = 0; i < SuperstarCard.HandSize && Deck.Count > 0; i++)
@@ -82,6 +88,19 @@ public class Player
         }
 
         return false;
+    }
+
+    // Arreglar este nombre y el de la función de arriba
+    public void DrawOnlyOneCard()
+    {
+        NormalCard drawnCard = RemoveTopCardFromDeck();
+        AddCardToHand(drawnCard);
+    }
+    
+    public void DiscardCard(NormalCard card)
+    {
+        RemoveCardFromHand(card);
+        AddCardToRingside(card);
     }
     public DamageResult ReceiveDamage(int damage)
     {

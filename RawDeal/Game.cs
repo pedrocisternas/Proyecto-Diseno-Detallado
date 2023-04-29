@@ -163,7 +163,9 @@ public class Game
 
         if (chosenCardIndex != -1)
         {
+            // Quizás acá se puede cambiar para que no retorne un string, si no un enum (habría que cambiar método playableCardsWithType
             (NormalCard selectedCard, string selectedType) = playableCardsWithType[chosenCardIndex];
+            // Console.WriteLine(selectedType);
             PlaySelectedCard(selectedCard, selectedType);
         }
     }
@@ -174,7 +176,30 @@ public class Game
         DisplayPlayerIsTryingToPlayCard(selectedCard, selectedType);
 
         _view.SayThatPlayerSuccessfullyPlayedACard();
+        
+        if (selectedType == "Action")
+        {
+            PlayCardAsAction(selectedCard);
+        }
+        else if (selectedType == "Maneuver")
+        {
+            PlayCardAsManeuver(damage, selectedCard);
+        }
+    }
 
+    private void PlayCardAsAction(NormalCard selectedCard)
+    {
+        // Sacar este train wreck. El nombre del superstar tiene que estar más fácil. Hay uno en ShowAppliedDamage también
+        // También pasa en SuperstarAbilities. Podría hacer un método en player que de directamente el nombre del superstar
+        GetActivePlayer().DiscardCard(selectedCard);
+        GetActivePlayer().DrawOnlyOneCard();
+        _view.SayThatPlayerMustDiscardThisCard(GetActivePlayer().SuperstarCard.Name, selectedCard.Title);
+        _view.SayThatPlayerDrawCards(GetActivePlayer().SuperstarCard.Name, 1);
+    }
+
+    // Me encantaría poder hacer esto en la clase Player, pero no puedo por el ShowAppliedDamage. Quizás podría si cambio harto
+    private void PlayCardAsManeuver(int damage, NormalCard selectedCard)
+    {
         GetActivePlayer().IncreaseFortitude(damage);
         GetActivePlayer().RemoveCardFromHand(selectedCard);
         GetActivePlayer().AddCardToRingArea(selectedCard);

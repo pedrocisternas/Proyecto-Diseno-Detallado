@@ -51,7 +51,7 @@ namespace RawDeal
 
         public override bool CanUseAbility(Player activePlayer, Player opponentPlayer)
         {
-            return activePlayer.GetHandCount() >= 1 && opponentPlayer.GetHandCount() >= 1;
+            return activePlayer.GetHandCount() >= 1;
         }
     }
 
