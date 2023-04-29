@@ -299,13 +299,16 @@ public class Game
 
     private void ShowAppliedDamage(List<NormalCard> overturnedCards, int damage)
     {
-        _view.SayThatOpponentWillTakeSomeDamage(GetOpponentPlayer().SuperstarCard.Name, damage);
-        for (int i = 0; i < overturnedCards.Count; i++)
+        if (damage != 0)
         {
-            NormalCard overturnedCard = overturnedCards[i];
-            ShowOverturnedCardInfo(overturnedCard, i + 1, damage);
+            _view.SayThatOpponentWillTakeSomeDamage(GetOpponentPlayer().SuperstarCard.Name, damage);
+            for (int i = 0; i < overturnedCards.Count; i++)
+            {
+                NormalCard overturnedCard = overturnedCards[i];
+                ShowOverturnedCardInfo(overturnedCard, i + 1, damage);
+            }
+            CheckGameOverAndHandle();
         }
-        CheckGameOverAndHandle();
     }
     private void ShowOverturnedCardInfo(NormalCard overturnedCard, int currentIndex, int damage)
     {
