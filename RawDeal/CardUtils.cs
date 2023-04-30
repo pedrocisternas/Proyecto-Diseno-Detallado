@@ -47,13 +47,11 @@ public static class CardUtils
         return playableCardsWithType;
     }
     
-    // Puedo achicar el método, ya que está adaptado del caso de arriba con action y maneuver
     public static List<NormalCard> GetReversalCards(Player player, NormalCard cardToReverse)
     {
         var handCards = player.GetHandCards();
         var affordableCards = handCards.Where(card => int.Parse(card.Fortitude) <= player.GetFortitude()).ToList();
 
-        // Filtra solo las cartas de tipo "Reversal" y verifica si pueden revertir la carta específica.
         var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && CanReverse(card, cardToReverse)).ToList();
 
         return applicableReversalCards;
@@ -61,7 +59,14 @@ public static class CardUtils
 
     private static bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse)
     {
-        // Implementa la lógica para verificar si el reversalCard puede revertir cardToReverse.
-        return true;
+        foreach (ReversalEffect effect in reversalCard.ReversalEffects)
+        {
+            if (effect.CanReverse(reversalCard, cardToReverse))
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

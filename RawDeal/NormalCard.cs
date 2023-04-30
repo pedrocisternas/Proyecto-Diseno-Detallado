@@ -11,6 +11,7 @@ public class NormalCard : IViewableCardInfo
     public string Damage { get; }
     public string StunValue { get; }
     public string CardEffect { get; }
+    public List<ReversalEffect> ReversalEffects { get; }
     public NormalCard(string title, List<string> types, List<string> subtypes, string fortitude, string damage, string stunValue, string cardEffect)
     {
         Title = title;
@@ -20,6 +21,11 @@ public class NormalCard : IViewableCardInfo
         Damage = damage;
         StunValue = stunValue;
         CardEffect = cardEffect;
+        ReversalEffects = new List<ReversalEffect>();
+        if (types.Contains("Reversal"))
+        {
+            AddReversalEffects(subtypes);
+        }
     }
 
     public NormalCard Clone()
@@ -35,6 +41,27 @@ public class NormalCard : IViewableCardInfo
         );
     }
     
+    private void AddReversalEffects(List<string> subtypes)
+    {
+        foreach (string subtype in subtypes)
+        {
+            switch (subtype)
+            {
+                case "ReversalStrike":
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Strike"));
+                    break;
+                case "ReversalGrapple":
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Grapple"));
+                    break;
+                case "ReversalSubmission":
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Submission"));
+                    break;
+                case "ReversalAction":
+                    ReversalEffects.Add(new ReversalByTypeEffect("Action"));
+                    break;
+            }
+        }
+    }
 }
 
 

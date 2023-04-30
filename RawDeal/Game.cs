@@ -169,6 +169,20 @@ public class Game
             PlaySelectedCard(selectedCard, selectedType);
         }
     }
+    private int SelectCardToPlay(List<(NormalCard card, string type)> playableCardsWithType)
+    {
+        List<string> playableCardStrings = playableCardsWithType.Select(cardWithType =>
+        {
+            IViewableCardInfo cardInfo = cardWithType.card;
+            string playedAs = cardWithType.type.ToUpper();
+            PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
+            return Formatter.PlayToString(playInfo);
+        }).ToList();
+
+        int chosenCardIndex = _view.AskUserToSelectAPlay(playableCardStrings);
+
+        return chosenCardIndex;
+    }
     private void PlaySelectedCard(NormalCard selectedCard, string selectedType)
     {
         int damage = int.Parse(selectedCard.Damage);
@@ -178,14 +192,15 @@ public class Game
         // Habría que hacer otro método para este if else
         NormalCard reversalCard = TryOpponentReversal(selectedCard);
 
-        // if (reversalCard != null)
-        // {
-        //     // Revierte la carta y maneja la lógica del reversal.
-        //     HandleReversal(reversalCard, selectedCard);
-        //     HandleEndTurn();
-        // }
-        // else
-        // {
+        if (reversalCard != null)
+        {
+            // Revierte la carta y maneja la lógica del reversal.
+            HandleReversal(reversalCard, selectedCard);
+            Console.WriteLine("Se va a revertir");
+            HandleEndTurn();
+        }
+        else
+        {
             _view.SayThatPlayerSuccessfullyPlayedACard();
             // Intentar cambiar los strings con un enum
             if (selectedType == "Action")
@@ -196,7 +211,7 @@ public class Game
             {
                 PlayCardAsManeuver(damage, selectedCard);
             }
-        // }
+        }
 
     }
 
@@ -232,9 +247,28 @@ public class Game
     
     private int SelectReversalCardToPlay(List<NormalCard> reversalCards)
     {
-        List<string> reversalCardStrings = reversalCards.Select(card => Formatter.CardToString(card)).ToList();
+        // Esta parte es igual que GetPlayabaleCards, sólo que acá se hardcodea "REVERSAL"
+        // Si cambio el método CardUtils.GetReversalCards para que en vez de devolverme una lista de cartas, me devuelva 
+        // una lista de cartas, tipo (igual que en CardUtils.GetPlayableCards, podría sacarlo a un método nuevo
+        List<string> reversalCardStrings = reversalCards.Select(card =>
+        {
+            IViewableCardInfo cardInfo = card;
+            string playedAs = "REVERSAL";
+            PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
+            return Formatter.PlayToString(playInfo);
+        }).ToList();
         int chosenCardIndex = _view.AskUserToSelectAReversal(GetOpponentPlayer().SuperstarCard.Name, reversalCardStrings);
         return chosenCardIndex;
+    }
+
+    public void HandleReversal(NormalCard reversalCard, NormalCard reversedCard)
+    {
+        // Separar esto en más métodos
+        DisplayPlayerIsTryingToPlayCard(reversalCard, "Reversal");
+        GetActivePlayer().RemoveCardFromHand(reversedCard);
+        GetActivePlayer().AddCardToRingside(reversedCard);
+        GetOpponentPlayer().RemoveCardFromHand(reversalCard);
+        GetOpponentPlayer().AddCardToRingArea(reversalCard);
     }
     // ACÁ!!
 
@@ -295,22 +329,7 @@ public class Game
         EndGame();
         _view.CongratulateWinner(winnerName);
     }
-    private int SelectCardToPlay(List<(NormalCard card, string type)> playableCardsWithType)
-    {
-        List<string> playableCardStrings = playableCardsWithType.Select(cardWithType =>
-        {
-            IViewableCardInfo cardInfo = cardWithType.card;
-            // No debería ser necesario, pero chequear
-            // string cardFormatted = Formatter.CardToString(cardInfo);
-            string playedAs = cardWithType.type.ToUpper();
-            PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
-            return Formatter.PlayToString(playInfo);
-        }).ToList();
-
-        int chosenCardIndex = _view.AskUserToSelectAPlay(playableCardStrings);
-
-        return chosenCardIndex;
-    }
+    
     private void DisplayPlayerIsTryingToPlayCard(NormalCard card, string cardType)
     {
         IViewableCardInfo cardInfo = card;
@@ -319,7 +338,14 @@ public class Game
         PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
         string formattedPlay = Formatter.PlayToString(playInfo);
 
-        _view.SayThatPlayerIsTryingToPlayThisCard(GetActivePlayer().SuperstarCard.Name, formattedPlay);
+        if (cardType == "Reversal")
+        {
+            _view.SayThatPlayerReversedTheCard(GetOpponentPlayer().SuperstarCard.Name, formattedPlay);
+        }
+        else
+        {
+            _view.SayThatPlayerIsTryingToPlayThisCard(GetActivePlayer().SuperstarCard.Name, formattedPlay);
+        }
     }
 
     private void ShowAppliedDamage(List<NormalCard> overturnedCards, int damage)
