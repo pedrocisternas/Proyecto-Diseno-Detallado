@@ -174,21 +174,35 @@ public class Game
         int damage = int.Parse(selectedCard.Damage);
 
         DisplayPlayerIsTryingToPlayCard(selectedCard, selectedType);
+        // ACÁ SE DA LA OPCIÓN DE REVERTIR
+        // Habría que hacer otro método para este if else
+        NormalCard reversalCard = TryOpponentReversal(selectedCard);
 
-        _view.SayThatPlayerSuccessfullyPlayedACard();
-        
-        if (selectedType == "Action")
-        {
-            PlayCardAsAction(selectedCard);
-        }
-        else if (selectedType == "Maneuver")
-        {
-            PlayCardAsManeuver(damage, selectedCard);
-        }
+        // if (reversalCard != null)
+        // {
+        //     // Revierte la carta y maneja la lógica del reversal.
+        //     HandleReversal(reversalCard, selectedCard);
+        //     HandleEndTurn();
+        // }
+        // else
+        // {
+            _view.SayThatPlayerSuccessfullyPlayedACard();
+            // Intentar cambiar los strings con un enum
+            if (selectedType == "Action")
+            {
+                PlayCardAsAction(selectedCard);
+            }
+            else if (selectedType == "Maneuver")
+            {
+                PlayCardAsManeuver(damage, selectedCard);
+            }
+        // }
+
     }
 
     private void PlayCardAsAction(NormalCard selectedCard)
     {
+        // No sé si es el mejor lugar para tener la lógica de jugar la carta como acción
         // Sacar este train wreck. El nombre del superstar tiene que estar más fácil. Hay uno en ShowAppliedDamage también
         // También pasa en SuperstarAbilities. Podría hacer un método en player que de directamente el nombre del superstar
         GetActivePlayer().DiscardCard(selectedCard);
@@ -207,6 +221,23 @@ public class Game
         DamageResult damageResult = GetOpponentPlayer().ReceiveDamage(damage);
         ShowAppliedDamage(damageResult.OverturnedCards, damageResult.AppliedDamage);
     }
+
+    // ACÁ!!. Nuevo
+    private NormalCard TryOpponentReversal(NormalCard playedCard)
+    {
+        List<NormalCard> reversalCards = CardUtils.GetReversalCards(GetOpponentPlayer(), playedCard);
+        int chosenCardIndex = SelectReversalCardToPlay(reversalCards);
+        return chosenCardIndex != -1 ? reversalCards[chosenCardIndex] : null;
+    }
+    
+    private int SelectReversalCardToPlay(List<NormalCard> reversalCards)
+    {
+        List<string> reversalCardStrings = reversalCards.Select(card => Formatter.CardToString(card)).ToList();
+        int chosenCardIndex = _view.AskUserToSelectAReversal(GetOpponentPlayer().SuperstarCard.Name, reversalCardStrings);
+        return chosenCardIndex;
+    }
+    // ACÁ!!
+
     private void HandleShowCards()
     {
         CardSet setOfCards = _view.AskUserWhatSetOfCardsHeWantsToSee();
@@ -282,11 +313,6 @@ public class Game
     }
     private void DisplayPlayerIsTryingToPlayCard(NormalCard card, string cardType)
     {
-        // string playInfo = Formatter.CardToString(card.Title,
-        //     card.Fortitude, card.Damage,
-        //     card.StunValue, card.Types, card.Subtypes,
-        //     card.CardEffect);
-        // _view.SayThatPlayerIsTryingToPlayThisCard(GetActivePlayer().SuperstarCard.Name, Formatter.PlayToString(playInfo, cardType.ToUpper()));
         IViewableCardInfo cardInfo = card;
         string playedAs = cardType.ToUpper();
 
@@ -294,7 +320,6 @@ public class Game
         string formattedPlay = Formatter.PlayToString(playInfo);
 
         _view.SayThatPlayerIsTryingToPlayThisCard(GetActivePlayer().SuperstarCard.Name, formattedPlay);
-
     }
 
     private void ShowAppliedDamage(List<NormalCard> overturnedCards, int damage)
@@ -312,25 +337,17 @@ public class Game
     }
     private void ShowOverturnedCardInfo(NormalCard overturnedCard, int currentIndex, int damage)
     {
-        // string overturnedCardInfo = Formatter.CardToString(overturnedCard.Title,
-        //     overturnedCard.Fortitude, overturnedCard.Damage,
-        //     overturnedCard.StunValue, overturnedCard.Types, overturnedCard.Subtypes,
-        //     overturnedCard.CardEffect);
-        // _view.ShowCardOverturnByTakingDamage(overturnedCardInfo, currentIndex, damage);
         IViewableCardInfo cardInfo = overturnedCard;
         string formattedCardInfo = Formatter.CardToString(cardInfo);
 
         _view.ShowCardOverturnByTakingDamage(formattedCardInfo, currentIndex, damage);
-
     }
-    private bool CheckGameOverAndHandle()
+    private void CheckGameOverAndHandle()
     {
         if (GetOpponentPlayer().GetDeckCount() == 0)
         {
             EndGameAndCongratulateWinner(GetActivePlayer().SuperstarCard.Name);
-            return true;
         }
-        return false;
     }
     private void ActivateSuperstarAbility()
     {
