@@ -233,8 +233,23 @@ public class Game
         GetActivePlayer().RemoveCardFromHand(selectedCard);
         GetActivePlayer().AddCardToRingArea(selectedCard);
         
-        DamageResult damageResult = GetOpponentPlayer().ReceiveDamage(damage);
-        ShowAppliedDamage(damageResult.OverturnedCards, damageResult.AppliedDamage);
+        DamageResult damageResult = GetOpponentPlayer().ReceiveDamage(damage, selectedCard);
+        ShowAppliedDamage(damageResult);
+        if (damageResult.WasReversed)
+        {
+            _view.SayThatCardWasReversedByDeck(GetOpponentPlayer().SuperstarCard.Name);
+            // Creo que tengo que ver el caso en que la carta fue revertida pero siendo la úlitma (en ese caso este jugador no puede robar cartas)
+            // Hacer otro método para esto
+            // Quizás convenga que el StunValue sea un int desde cuando se crea la carta (para no tener que convertirlo acá dos veces)
+            if (int.Parse(selectedCard.StunValue) > 0)
+            {
+                int numberOfCardsSelected = _view.AskHowManyCardsToDrawBecauseOfStunValue(GetActivePlayer().SuperstarCard.Name,
+                    int.Parse(selectedCard.StunValue));
+                GetActivePlayer().DrawCards(numberOfCardsSelected);
+                _view.SayThatPlayerDrawCards(GetActivePlayer().SuperstarCard.Name, numberOfCardsSelected);
+            }
+            HandleEndTurn();
+        }
     }
 
     // ACÁ!!. Nuevo
@@ -348,16 +363,17 @@ public class Game
         }
     }
 
-    private void ShowAppliedDamage(List<NormalCard> overturnedCards, int damage)
+    private void ShowAppliedDamage(DamageResult damageResult)
     {
-        if (damage != 0)
+        if (damageResult.AppliedDamage != 0)
         {
-            _view.SayThatOpponentWillTakeSomeDamage(GetOpponentPlayer().SuperstarCard.Name, damage);
-            for (int i = 0; i < overturnedCards.Count; i++)
+            _view.SayThatOpponentWillTakeSomeDamage(GetOpponentPlayer().SuperstarCard.Name, damageResult.AppliedDamage);
+            for (int i = 0; i < damageResult.OverturnedCards.Count; i++)
             {
-                NormalCard overturnedCard = overturnedCards[i];
-                ShowOverturnedCardInfo(overturnedCard, i + 1, damage);
+                NormalCard overturnedCard = damageResult.OverturnedCards[i];
+                ShowOverturnedCardInfo(overturnedCard, i + 1, damageResult.AppliedDamage);
             }
+
             CheckGameOverAndHandle();
         }
     }
@@ -381,7 +397,7 @@ public class Game
         {
             _view.SayThatPlayerIsGoingToUseHisAbility(GetActivePlayer().SuperstarCard.Name, GetActivePlayer().SuperstarCard.SuperstarAbility);
             DamageResult damageResult = GetOpponentPlayer().ReceiveDirectDamage(1);
-            ShowAppliedDamage(damageResult.OverturnedCards, damageResult.AppliedDamage);
+            ShowAppliedDamage(damageResult);
         }
         ISuperstarAbility ability = GetActivePlayer().SuperstarCard.Ability;
         if (ability.IsAutomatic() && ability.CanUseAbility(GetActivePlayer(), GetOpponentPlayer()))

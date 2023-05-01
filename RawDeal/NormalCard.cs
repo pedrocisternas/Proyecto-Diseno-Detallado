@@ -62,6 +62,19 @@ public class NormalCard : IViewableCardInfo
             }
         }
     }
+    
+    public bool CanReverse(NormalCard cardToReverse)
+    {
+        foreach (ReversalEffect effect in ReversalEffects)
+        {
+            if (effect.CanReverse(this, cardToReverse))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
 
 

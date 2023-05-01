@@ -52,21 +52,22 @@ public static class CardUtils
         var handCards = player.GetHandCards();
         var affordableCards = handCards.Where(card => int.Parse(card.Fortitude) <= player.GetFortitude()).ToList();
 
-        var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && CanReverse(card, cardToReverse)).ToList();
+        // var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && CanReverse(card, cardToReverse)).ToList();
+        var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && card.CanReverse(cardToReverse)).ToList();
 
         return applicableReversalCards;
     }
 
-    private static bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse)
-    {
-        foreach (ReversalEffect effect in reversalCard.ReversalEffects)
-        {
-            if (effect.CanReverse(reversalCard, cardToReverse))
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
+    // private static bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse)
+    // {
+    //     foreach (ReversalEffect effect in reversalCard.ReversalEffects)
+    //     {
+    //         if (effect.CanReverse(reversalCard, cardToReverse))
+    //         {
+    //             return true;
+    //         }
+    //     }
+    //     
+    //     return false;
+    // }
 }

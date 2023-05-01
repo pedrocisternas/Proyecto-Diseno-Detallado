@@ -51,8 +51,7 @@ public class Player
     {
         return !HasUsedAbilityThisTurn && SuperstarCard.Ability.CanUseAbility(this, opponentPlayer) && !SuperstarCard.Ability.IsAutomatic();
     }
-        
-        
+
     public void ExecuteAbility(Player opponentPlayer, View view)
     {
         SuperstarCard.Ability.Execute(this, opponentPlayer, view);
@@ -70,6 +69,15 @@ public class Player
         }
 
         return Deck.Count == 0;
+    }
+    
+    public void DrawCards(int numberOfCards)
+    {
+        for (int i = 0; i < numberOfCards; i++)
+        {
+            NormalCard drawnCard = RemoveTopCardFromDeck();
+            AddCardToHand(drawnCard);
+        }
     }
     public bool DrawOneCard()
     {
@@ -102,19 +110,27 @@ public class Player
         RemoveCardFromHand(card);
         AddCardToRingside(card);
     }
-    public DamageResult ReceiveDamage(int damage)
+    
+    // Ver si puedo fusionar estos dos métodos (este y el de abajo). Si no cambiar nombres
+    public DamageResult ReceiveDamage(int damage, NormalCard damageCard)
     {
         int modifiedDamage = SuperstarCard.Ability.ModifyIncomingDamage(damage);
         List<NormalCard> overturnedCards = new List<NormalCard>();
+        bool wasReversed = false;
 
         for (int i = 0; i < modifiedDamage && Deck.Count > 0; i++)
         {
             NormalCard overturnedCard = RemoveTopCardFromDeck();
             AddCardToRingside(overturnedCard);
             overturnedCards.Add(overturnedCard);
+            if (overturnedCard.CanReverse(damageCard))
+            {
+                wasReversed = true;
+                break;
+            }
         }
 
-        return new DamageResult(overturnedCards, modifiedDamage);
+        return new DamageResult(overturnedCards, modifiedDamage, wasReversed);
     }
     public DamageResult ReceiveDirectDamage(int damage)
     {
@@ -127,6 +143,7 @@ public class Player
             overturnedCards.Add(overturnedCard);
         }
 
-        return new DamageResult(overturnedCards, damage);
+        // Revisar el último hardcode
+        return new DamageResult(overturnedCards, damage, false);
     }
 }
