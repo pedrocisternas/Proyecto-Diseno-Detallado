@@ -112,7 +112,7 @@ public class Player
     }
     
     // Ver si puedo fusionar estos dos métodos (este y el de abajo). Si no cambiar nombres
-    public DamageResult ReceiveDamage(int damage, NormalCard damageCard)
+    public DamageResult ReceiveDamage(int damage, NormalCard damageCard, string playedAs)
     {
         int modifiedDamage = SuperstarCard.Ability.ModifyIncomingDamage(damage);
         List<NormalCard> overturnedCards = new List<NormalCard>();
@@ -123,7 +123,7 @@ public class Player
             NormalCard overturnedCard = RemoveTopCardFromDeck();
             AddCardToRingside(overturnedCard);
             overturnedCards.Add(overturnedCard);
-            if (overturnedCard.CanReverse(damageCard))
+            if (overturnedCard.CanReverse(damageCard, playedAs))
             {
                 wasReversed = true;
                 break;

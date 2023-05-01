@@ -190,7 +190,7 @@ public class Game
         DisplayPlayerIsTryingToPlayCard(selectedCard, selectedType);
         // ACÁ SE DA LA OPCIÓN DE REVERTIR
         // Habría que hacer otro método para este if else
-        NormalCard reversalCard = TryOpponentReversal(selectedCard);
+        NormalCard reversalCard = TryOpponentReversal(selectedCard, selectedType);
 
         if (reversalCard != null)
         {
@@ -233,29 +233,31 @@ public class Game
         GetActivePlayer().RemoveCardFromHand(selectedCard);
         GetActivePlayer().AddCardToRingArea(selectedCard);
         
-        DamageResult damageResult = GetOpponentPlayer().ReceiveDamage(damage, selectedCard);
+        DamageResult damageResult = GetOpponentPlayer().ReceiveDamage(damage, selectedCard, "Maneuver");
         ShowAppliedDamage(damageResult);
         if (damageResult.WasReversed)
         {
             _view.SayThatCardWasReversedByDeck(GetOpponentPlayer().SuperstarCard.Name);
-            // Creo que tengo que ver el caso en que la carta fue revertida pero siendo la úlitma (en ese caso este jugador no puede robar cartas)
+            CheckGameOverAndHandle();
             // Hacer otro método para esto
             // Quizás convenga que el StunValue sea un int desde cuando se crea la carta (para no tener que convertirlo acá dos veces)
-            if (int.Parse(selectedCard.StunValue) > 0)
+            if (int.Parse(selectedCard.StunValue) > 0 && damageResult.OverturnedCards.Count != damageResult.AppliedDamage)
             {
                 int numberOfCardsSelected = _view.AskHowManyCardsToDrawBecauseOfStunValue(GetActivePlayer().SuperstarCard.Name,
                     int.Parse(selectedCard.StunValue));
                 GetActivePlayer().DrawCards(numberOfCardsSelected);
-                _view.SayThatPlayerDrawCards(GetActivePlayer().SuperstarCard.Name, numberOfCardsSelected);
+                // _view.SayThatPlayerDrawCards(GetActivePlayer().SuperstarCard.Name, numberOfCardsSelected);
+                if (numberOfCardsSelected > 0) _view.SayThatPlayerDrawCards(GetActivePlayer().SuperstarCard.Name, numberOfCardsSelected);
             }
             HandleEndTurn();
         }
+        CheckGameOverAndHandle();
     }
 
     // ACÁ!!. Nuevo
-    private NormalCard TryOpponentReversal(NormalCard playedCard)
+    private NormalCard TryOpponentReversal(NormalCard playedCard, string playedAs)
     {
-        List<NormalCard> reversalCards = CardUtils.GetReversalCards(GetOpponentPlayer(), playedCard);
+        List<NormalCard> reversalCards = CardUtils.GetReversalCards(GetOpponentPlayer(), playedCard, playedAs);
         int chosenCardIndex = SelectReversalCardToPlay(reversalCards);
         return chosenCardIndex != -1 ? reversalCards[chosenCardIndex] : null;
     }
@@ -373,8 +375,6 @@ public class Game
                 NormalCard overturnedCard = damageResult.OverturnedCards[i];
                 ShowOverturnedCardInfo(overturnedCard, i + 1, damageResult.AppliedDamage);
             }
-
-            CheckGameOverAndHandle();
         }
     }
     private void ShowOverturnedCardInfo(NormalCard overturnedCard, int currentIndex, int damage)
@@ -396,6 +396,7 @@ public class Game
         if (GetActivePlayer().SuperstarCard.HasAbility("Kane"))
         {
             _view.SayThatPlayerIsGoingToUseHisAbility(GetActivePlayer().SuperstarCard.Name, GetActivePlayer().SuperstarCard.SuperstarAbility);
+            CheckGameOverAndHandle();
             DamageResult damageResult = GetOpponentPlayer().ReceiveDirectDamage(1);
             ShowAppliedDamage(damageResult);
         }

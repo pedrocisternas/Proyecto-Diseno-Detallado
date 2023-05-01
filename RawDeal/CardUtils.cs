@@ -47,13 +47,13 @@ public static class CardUtils
         return playableCardsWithType;
     }
     
-    public static List<NormalCard> GetReversalCards(Player player, NormalCard cardToReverse)
+    public static List<NormalCard> GetReversalCards(Player player, NormalCard cardToReverse, string playedAs)
     {
         var handCards = player.GetHandCards();
         var affordableCards = handCards.Where(card => int.Parse(card.Fortitude) <= player.GetFortitude()).ToList();
 
         // var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && CanReverse(card, cardToReverse)).ToList();
-        var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && card.CanReverse(cardToReverse)).ToList();
+        var applicableReversalCards = affordableCards.Where(card => card.Types.Contains("Reversal") && card.CanReverse(cardToReverse, playedAs)).ToList();
 
         return applicableReversalCards;
     }

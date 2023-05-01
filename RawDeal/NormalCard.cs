@@ -48,13 +48,13 @@ public class NormalCard : IViewableCardInfo
             switch (subtype)
             {
                 case "ReversalStrike":
-                    ReversalEffects.Add(new ReversalBySubtypeEffect("Strike"));
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Maneuver", "Strike"));
                     break;
                 case "ReversalGrapple":
-                    ReversalEffects.Add(new ReversalBySubtypeEffect("Grapple"));
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Maneuver", "Grapple"));
                     break;
                 case "ReversalSubmission":
-                    ReversalEffects.Add(new ReversalBySubtypeEffect("Submission"));
+                    ReversalEffects.Add(new ReversalBySubtypeEffect("Maneuver", "Submission"));
                     break;
                 case "ReversalAction":
                     ReversalEffects.Add(new ReversalByTypeEffect("Action"));
@@ -63,11 +63,11 @@ public class NormalCard : IViewableCardInfo
         }
     }
     
-    public bool CanReverse(NormalCard cardToReverse)
+    public bool CanReverse(NormalCard cardToReverse, string playedAs)
     {
         foreach (ReversalEffect effect in ReversalEffects)
         {
-            if (effect.CanReverse(this, cardToReverse))
+            if (effect.CanReverse(cardToReverse, playedAs))
             {
                 return true;
             }

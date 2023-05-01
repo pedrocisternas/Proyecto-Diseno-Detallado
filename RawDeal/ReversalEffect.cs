@@ -2,7 +2,7 @@ namespace RawDeal;
 
 public abstract class ReversalEffect
 {
-    public abstract bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse);
+    public abstract bool CanReverse(NormalCard cardToReverse, string playedAs);
 }
 
 public class ReversalByTypeEffect : ReversalEffect
@@ -14,23 +14,25 @@ public class ReversalByTypeEffect : ReversalEffect
         TargetType = targetType;
     }
 
-    public override bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse)
+    public override bool CanReverse(NormalCard cardToReverse, string playedAs)
     {
-        return cardToReverse.Types.Contains(TargetType);
+        return playedAs == TargetType;
     }
 }
 
 public class ReversalBySubtypeEffect : ReversalEffect
 {
+    public string TargetType { get; }
     public string TargetSubtype { get; }
 
-    public ReversalBySubtypeEffect(string targetSubtype)
+    public ReversalBySubtypeEffect(string targetType, string targetSubtype)
     {
+        TargetType = targetType;
         TargetSubtype = targetSubtype;
     }
 
-    public override bool CanReverse(NormalCard reversalCard, NormalCard cardToReverse)
+    public override bool CanReverse(NormalCard cardToReverse, string playedAs)
     {
-        return cardToReverse.Subtypes.Contains(TargetSubtype);
+        return playedAs == TargetType && cardToReverse.Subtypes.Contains(TargetSubtype);
     }
 }
