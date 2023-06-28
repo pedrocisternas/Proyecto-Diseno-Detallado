@@ -15,10 +15,10 @@ public class GamePresenter
 
     public void ShowPlayersInfo(Player activePlayer, Player opponentPlayer)
     {
-        PlayerInfo activePlayerInfo = new PlayerInfo(activePlayer.SuperstarCard.Name, 
+        PlayerInfo activePlayerInfo = new PlayerInfo(activePlayer.GetSuperstarName(), 
             activePlayer.GetFortitude(), activePlayer.GetHandCount(), 
             activePlayer.GetDeckCount());
-        PlayerInfo opponentPlayerInfo = new PlayerInfo(opponentPlayer.SuperstarCard.Name, 
+        PlayerInfo opponentPlayerInfo = new PlayerInfo(opponentPlayer.GetSuperstarName(), 
             opponentPlayer.GetFortitude(), opponentPlayer.GetHandCount(), 
             opponentPlayer.GetDeckCount());
         
@@ -51,7 +51,7 @@ public class GamePresenter
     {
         if (damageResult.AppliedDamage > 0)
         {
-            _view.SayThatSuperstarWillTakeSomeDamage(player.SuperstarCard.Name, damageResult.AppliedDamage);
+            _view.SayThatSuperstarWillTakeSomeDamage(player.GetSuperstarName(), damageResult.AppliedDamage);
             for (int i = 0; i < damageResult.OverturnedCards.Count; i++)
             {
                 NormalCard overturnedCard = damageResult.OverturnedCards[i];
@@ -79,11 +79,11 @@ public class GamePresenter
 
         if (cardType == "Reversal")
         {
-            _view.SayThatPlayerReversedTheCard(opponentPlayer.SuperstarCard.Name, formattedPlay);
+            _view.SayThatPlayerReversedTheCard(opponentPlayer.GetSuperstarName(), formattedPlay);
         }
         else
         {
-            _view.SayThatPlayerIsTryingToPlayThisCard(activePlayer.SuperstarCard.Name, formattedPlay);
+            _view.SayThatPlayerIsTryingToPlayThisCard(activePlayer.GetSuperstarName(), formattedPlay);
         }
     }
 }

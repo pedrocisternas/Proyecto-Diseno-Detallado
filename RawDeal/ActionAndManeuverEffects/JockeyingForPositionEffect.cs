@@ -8,7 +8,7 @@ public class JockeyingForPositionEffect : IActionAndManeuverEffect
     public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
     {
         SelectedEffect selectedEffect = 
-            view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.SuperstarCard.Name);
+            view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.GetSuperstarName());
         PlaySelectedEffect(selectedEffect, playingPlayer, otherPlayer);
         
         playingPlayer.RemoveCardFromHand(selectedCard);

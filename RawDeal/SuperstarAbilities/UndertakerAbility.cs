@@ -16,7 +16,7 @@ public class UndertakerAbility : BaseSuperstarAbility
     private void AnnounceAbilityUsage(Player activePlayer, View view)
     {
         view.SayThatPlayerIsGoingToUseHisAbility(
-            activePlayer.SuperstarCard.Name, activePlayer.SuperstarCard.SuperstarAbility);
+            activePlayer.GetSuperstarName(), activePlayer.SuperstarCard.SuperstarAbility);
     }
 
     private void DiscardCardsFromHand(Player activePlayer, View view, int numberOfCardsToDiscard)
@@ -34,8 +34,8 @@ public class UndertakerAbility : BaseSuperstarAbility
         List<string> formattedCards = CardUtils.GetFormattedCards(activePlayer.GetHandCards());
         int chosenCardId = 
             view.AskPlayerToSelectACardToDiscard(formattedCards, 
-                activePlayer.SuperstarCard.Name, 
-                activePlayer.SuperstarCard.Name, remainingCardsToDiscard);
+                activePlayer.GetSuperstarName(), 
+                activePlayer.GetSuperstarName(), remainingCardsToDiscard);
         
         return activePlayer.GetACardFromHand(chosenCardId);
     }
@@ -45,7 +45,7 @@ public class UndertakerAbility : BaseSuperstarAbility
         List<string> formattedRingsideCards = CardUtils.GetFormattedCards(activePlayer.GetRingsideCards());
         int chosenRingsideCardId = 
             view.AskPlayerToSelectCardsToPutInHisHand(
-                activePlayer.SuperstarCard.Name, 1, formattedRingsideCards);
+                activePlayer.GetSuperstarName(), 1, formattedRingsideCards);
         NormalCard selectedRingsideCard = activePlayer.GetACardFromRingside(chosenRingsideCardId);
 
         MoveCardFromRingsideToHand(activePlayer, selectedRingsideCard);

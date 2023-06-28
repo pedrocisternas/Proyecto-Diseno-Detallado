@@ -8,7 +8,7 @@ public class HybridEffect : IActionAndManeuverEffect
     {
         playingPlayer.DiscardCard(selectedCard);
         playingPlayer.DrawCards();
-        view.SayThatPlayerMustDiscardThisCard(playingPlayer.SuperstarCard.Name, selectedCard.Title);
-        view.SayThatPlayerDrawCards(playingPlayer.SuperstarCard.Name, 1);
+        view.SayThatPlayerMustDiscardThisCard(playingPlayer.GetSuperstarName(), selectedCard.Title);
+        view.SayThatPlayerDrawCards(playingPlayer.GetSuperstarName(), 1);
     }
 }

@@ -55,7 +55,7 @@ public class Deck
         }
     }
 
-    public bool IsValid()
+    public bool CheckIfIsValid()
     {
         DeckValidator deckValidator = new DeckValidator();
         return deckValidator.Validate(NormalCards);

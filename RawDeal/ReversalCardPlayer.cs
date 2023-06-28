@@ -30,15 +30,9 @@ public class ReversalCardPlayer
     
     private int SelectReversalCardToPlay(List<NormalCard> reversalCards)
     {
-        List<string> reversalCardStrings = reversalCards.Select(card =>
-        {
-            IViewableCardInfo cardInfo = card;
-            string playedAs = "REVERSAL";
-            PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
-            return Formatter.PlayToString(playInfo);
-        }).ToList();
         int chosenCardIndex = 
-            _view.AskUserToSelectAReversal(_opponentPlayer.SuperstarCard.Name, reversalCardStrings);
+            _view.AskUserToSelectAReversal(_opponentPlayer.GetSuperstarName(),
+                CardUtils.FormatReversalCards(reversalCards));
         return chosenCardIndex;
     }
     
@@ -49,18 +43,20 @@ public class ReversalCardPlayer
             "Reversal", _activePlayer, _opponentPlayer);
         _playerManager.ResetCardEffectState();
         MoveCardsInReversal(reversalCard, reversedCard);
-        
-        if (reversalCard.ReversalEffects.Count > 0)
-        {
-            foreach (var effect in reversalCard.ReversalEffects)
-            {
-                effect.ApplyEffect(reversalCard, _activePlayer, _opponentPlayer, _view);
-            }
-        }
+        ApplyReversalEffects(reversalCard);
         
         HandleReversalDamage(reversalCard, modifiedReversedCard);
     }
-    
+
+    private void ApplyReversalEffects(NormalCard reversalCard)
+    {
+        if (reversalCard.ReversalEffects.Count <= 0) return;
+        foreach (var effect in reversalCard.ReversalEffects)
+        {
+            effect.ApplyEffect(reversalCard, _activePlayer, _opponentPlayer, _view);
+        }
+    }
+
     private void MoveCardsInReversal(NormalCard reversalCard, NormalCard reversedCard)
     {
         _activePlayer.RemoveCardFromHand(reversedCard);
@@ -71,25 +67,32 @@ public class ReversalCardPlayer
 
     private void HandleReversalDamage(NormalCard reversalCard, NormalCard modifiedReversedCard)
     {
+        var finalReversalDamage = CheckForSpecialDamage(reversalCard, modifiedReversedCard);
+        DamageResult finalDamage = 
+            _activePlayer.ReceiveDirectDamage(int.Parse(finalReversalDamage), true);
+        _gamePresenter.ShowAppliedDamage(finalDamage, _activePlayer);
+    }
+
+    private string CheckForSpecialDamage(NormalCard reversalCard, NormalCard modifiedReversedCard)
+    {
         string finalReversalDamage = reversalCard.Damage;
         if (reversalCard.Damage == "#")
         {
-            finalReversalDamage = _opponentPlayer.SuperstarCard.Ability.
-                ModifyIncomingDamage(int.Parse(modifiedReversedCard.Damage)).ToString();
             _opponentPlayer.IncreaseFortitude(0);
+            finalReversalDamage = _opponentPlayer.SuperstarCard.Ability
+                .ModifyIncomingDamage(int.Parse(modifiedReversedCard.Damage)).ToString();
         }
         else
         {
             _opponentPlayer.IncreaseFortitude(int.Parse(finalReversalDamage));
         }
-        DamageResult finalDamage = 
-            _activePlayer.ReceiveDirectDamage(int.Parse(finalReversalDamage), true);
-        _gamePresenter.ShowAppliedDamage(finalDamage, _activePlayer);
+
+        return finalReversalDamage;
     }
-    
+
     public void ReverseExecute(NormalCard selectedCard, DamageResult damageResult)
     {
-        _view.SayThatCardWasReversedByDeck(_opponentPlayer.SuperstarCard.Name);
+        _view.SayThatCardWasReversedByDeck(_opponentPlayer.GetSuperstarName());
         if (int.Parse(selectedCard.StunValue) > 0 && 
             damageResult.OverturnedCards.Count != damageResult.AppliedDamage)
         {
@@ -100,10 +103,10 @@ public class ReversalCardPlayer
     private void StunValueAction(NormalCard selectedCard)
     {
         int numberOfCardsSelected = 
-            _view.AskHowManyCardsToDrawBecauseOfStunValue(_activePlayer.SuperstarCard.Name,
+            _view.AskHowManyCardsToDrawBecauseOfStunValue(_activePlayer.GetSuperstarName(),
             int.Parse(selectedCard.StunValue));
         _activePlayer.DrawCards(numberOfCardsSelected);
         if (numberOfCardsSelected > 0) 
-            _view.SayThatPlayerDrawCards(_activePlayer.SuperstarCard.Name, numberOfCardsSelected);
+            _view.SayThatPlayerDrawCards(_activePlayer.GetSuperstarName(), numberOfCardsSelected);
     }
 }

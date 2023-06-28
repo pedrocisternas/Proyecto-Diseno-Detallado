@@ -29,8 +29,8 @@ public class OpponentDiscardCardsEffect : IActionAndManeuverEffect
         List<string> cardsString = FormatCards(cardsThatMightBeDiscarded);
 
         int chosenCardIndex = view.AskPlayerToSelectACardToDiscard(cardsString, 
-            otherPlayer.SuperstarCard.Name, 
-            otherPlayer.SuperstarCard.Name, remainingCardsToDiscard);
+            otherPlayer.GetSuperstarName(), 
+            otherPlayer.GetSuperstarName(), remainingCardsToDiscard);
         
         otherPlayer.DiscardCard(cardsThatMightBeDiscarded[chosenCardIndex]);
     }

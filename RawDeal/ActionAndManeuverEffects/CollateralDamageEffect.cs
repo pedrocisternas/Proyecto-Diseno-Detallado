@@ -12,7 +12,7 @@ public class CollateralDamageEffect : IActionAndManeuverEffect
 
     private void ApplyPlayerDamage(Player playingPlayer, View view)
     {
-        view.SayThatPlayerDamagedHimself(playingPlayer.SuperstarCard.Name, 1);
+        view.SayThatPlayerDamagedHimself(playingPlayer.GetSuperstarName(), 1);
         DamageResult damageResult = playingPlayer.ReceiveDirectDamage(1, false);
 
         if (damageResult.AppliedDamage > 0)
@@ -23,7 +23,7 @@ public class CollateralDamageEffect : IActionAndManeuverEffect
 
     private void ShowDamageAndOverturnedCards(Player playingPlayer, View view, DamageResult damageResult)
     {
-        view.SayThatSuperstarWillTakeSomeDamage(playingPlayer.SuperstarCard.Name, damageResult.AppliedDamage);
+        view.SayThatSuperstarWillTakeSomeDamage(playingPlayer.GetSuperstarName(), damageResult.AppliedDamage);
         
         for (int i = 0; i < damageResult.OverturnedCards.Count; i++)
         {

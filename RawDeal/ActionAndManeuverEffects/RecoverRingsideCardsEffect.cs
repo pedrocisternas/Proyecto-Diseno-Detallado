@@ -19,7 +19,7 @@ public class RecoverRingsideCardsEffect : IActionAndManeuverEffect
         if (_numberOfCardsToDraw > 0)
         {
             playingPlayer.DrawCards(_numberOfCardsToDraw);
-            view.SayThatPlayerDrawCards(playingPlayer.SuperstarCard.Name, _numberOfCardsToDraw);
+            view.SayThatPlayerDrawCards(playingPlayer.GetSuperstarName(), _numberOfCardsToDraw);
         }
     }
 
@@ -29,7 +29,7 @@ public class RecoverRingsideCardsEffect : IActionAndManeuverEffect
         {
             List<string> formattedCards = CardUtils.GetFormattedCards(playingPlayer.GetRingsideCards());
             int chosenCardId = 
-                view.AskPlayerToSelectCardsToRecover(playingPlayer.SuperstarCard.Name, 
+                view.AskPlayerToSelectCardsToRecover(playingPlayer.GetSuperstarName(), 
                     _numberOfRingsideCards - i, formattedCards);
             NormalCard card = playingPlayer.GetACardFromRingside(chosenCardId);
             playingPlayer.RemoveCardFromRingside(card);

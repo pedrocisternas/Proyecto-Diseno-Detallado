@@ -6,11 +6,11 @@ public class TheRockAbility : BaseSuperstarAbility
 {
     public override void Execute(Player activePlayer, Player opponentPlayer, View view)
     {
-        if (view.DoesPlayerWantToUseHisAbility(activePlayer.SuperstarCard.Name))
+        if (view.DoesPlayerWantToUseHisAbility(activePlayer.GetSuperstarName()))
         {
             List<string> formattedCards = CardUtils.GetFormattedCards(activePlayer.GetRingsideCards());
             int chosenCardId = 
-                view.AskPlayerToSelectCardsToRecover(activePlayer.SuperstarCard.Name, 1, formattedCards);
+                view.AskPlayerToSelectCardsToRecover(activePlayer.GetSuperstarName(), 1, formattedCards);
             NormalCard selectedCard = activePlayer.GetACardFromRingside(chosenCardId);
             MoveCardFromRingsideToDeck(activePlayer, selectedCard);
         }

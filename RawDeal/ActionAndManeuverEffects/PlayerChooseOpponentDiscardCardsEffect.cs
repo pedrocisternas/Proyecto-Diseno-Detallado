@@ -11,8 +11,8 @@ public class PlayerChooseOpponentDiscardCardsEffect : IActionAndManeuverEffect
             List<string> formattedCards = CardUtils.GetFormattedCards(otherPlayer.GetHandCards());
             int chosenCardId = 
                 view.AskPlayerToSelectACardToDiscard(formattedCards, 
-                    otherPlayer.SuperstarCard.Name, 
-                    playingPlayer.SuperstarCard.Name, 1);
+                    otherPlayer.GetSuperstarName(), 
+                    playingPlayer.GetSuperstarName(), 1);
             NormalCard cardToDiscard = otherPlayer.GetACardFromHand(chosenCardId);
             otherPlayer.RemoveCardFromHand(cardToDiscard);
             otherPlayer.AddCardToRingside(cardToDiscard);

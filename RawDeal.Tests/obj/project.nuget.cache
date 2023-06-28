@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "94o2eDZJ/Cs/6ROaGa7PuQZ9U2Tj+v1oosFFgj3m8D18Hf7T81TvAMzEHVC6yq+pkvyq4Ngtrxuf89TpiUiWkg==",
+  "dgSpecHash": "3Ybri0aDN/zdHf8EuuBXj5uPj2s4LKmfwirPcLyZMJuiwUajmxskd/895ETwJUnYR0rx8DEkFyUnyh03QqqsDw==",
   "success": true,
-  "projectFilePath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDeal.Tests/RawDeal.Tests.csproj",
+  "projectFilePath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDeal.Tests/RawDeal.Tests.csproj",
   "expectedPackageFiles": [
     "/Users/pedrocisternas/.nuget/packages/coverlet.collector/3.1.0/coverlet.collector.3.1.0.nupkg.sha512",
     "/Users/pedrocisternas/.nuget/packages/microsoft.codecoverage/16.11.0/microsoft.codecoverage.16.11.0.nupkg.sha512",

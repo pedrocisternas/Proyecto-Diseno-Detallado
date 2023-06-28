@@ -8,13 +8,13 @@ public class JerichoAbility : BaseSuperstarAbility
     {
         AnnounceAbilityUsage(activePlayer, view);
         
-        DiscardCardFromHand(activePlayer, view, activePlayer.SuperstarCard.Name);
-        DiscardCardFromHand(opponentPlayer, view, opponentPlayer.SuperstarCard.Name);
+        DiscardCardFromHand(activePlayer, view, activePlayer.GetSuperstarName());
+        DiscardCardFromHand(opponentPlayer, view, opponentPlayer.GetSuperstarName());
     }
 
     private void AnnounceAbilityUsage(Player activePlayer, View view)
     {
-        view.SayThatPlayerIsGoingToUseHisAbility(activePlayer.SuperstarCard.Name,
+        view.SayThatPlayerIsGoingToUseHisAbility(activePlayer.GetSuperstarName(),
             activePlayer.SuperstarCard.SuperstarAbility);
     }
 

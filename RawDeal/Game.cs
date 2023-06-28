@@ -34,7 +34,7 @@ public class Game
         OpponentPlayer().AddLastPlay(new NullCard(), "");
         _playerManager.DetermineStartingAndActivePlayer();
     
-        _view.SayThatATurnBegins(ActivePlayer().SuperstarCard.Name);
+        _view.SayThatATurnBegins(ActivePlayer().GetSuperstarName());
 
         ActivePlayer().DrawStartingCards();
         OpponentPlayer().DrawStartingCards();
@@ -101,7 +101,7 @@ public class Game
     private void HandleGiveUp()
     {
         EndGame();
-        _view.CongratulateWinner(OpponentPlayer().SuperstarCard.Name);
+        _view.CongratulateWinner(OpponentPlayer().GetSuperstarName());
     }
     
     private void HandleEndTurn()
@@ -129,7 +129,7 @@ public class Game
         ActivePlayer().EndTurnLastPlay();
         ActivePlayer().EndTurn();
         _playerManager.SwitchActivePlayer();
-        _view.SayThatATurnBegins(ActivePlayer().SuperstarCard.Name);
+        _view.SayThatATurnBegins(ActivePlayer().GetSuperstarName());
         HandleStartTurn();
     }
     
@@ -148,12 +148,12 @@ public class Game
     {
         if (ActivePlayer().GetDeckCount() == 0)
         {
-            EndGameAndCongratulateWinner(OpponentPlayer().SuperstarCard.Name);
+            EndGameAndCongratulateWinner(OpponentPlayer().GetSuperstarName());
             return true;
         }
         if (OpponentPlayer().GetDeckCount() == 0)
         {
-            EndGameAndCongratulateWinner(ActivePlayer().SuperstarCard.Name);
+            EndGameAndCongratulateWinner(ActivePlayer().GetSuperstarName());
             return true;
         }
         return false;
@@ -186,7 +186,7 @@ public class Game
     private void KaneException()
     {
         _view.SayThatPlayerIsGoingToUseHisAbility(
-            ActivePlayer().SuperstarCard.Name, 
+            ActivePlayer().GetSuperstarName(), 
             ActivePlayer().SuperstarCard.SuperstarAbility);
         CheckGameOverAndHandle();
         DamageResult damageResult = OpponentPlayer().ReceiveDirectDamage(1);

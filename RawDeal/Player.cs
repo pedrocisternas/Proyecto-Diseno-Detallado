@@ -26,6 +26,11 @@ public class Player
         _hasUsedAbilityThisTurn = false;
         BonusList = new List<IBonus>();
     }
+    
+    public string GetSuperstarName()
+    {
+        return SuperstarCard.Name;
+    }
     public int GetFortitude() => _fortitude;
     public void IncreaseFortitude(int amount) => _fortitude += amount;
     public int GetHandCount() => _hand.Count;
@@ -97,7 +102,7 @@ public class Player
             List<NormalCard> cardsThatMightBeDiscarded = GetHandCards();
             List<string> cardsString = cardsThatMightBeDiscarded.Select(card =>
                 Formatter.CardToString(card)).ToList();
-
+    
             int chosenCardIndex = view.AskPlayerToSelectACardToDiscard(cardsString,
                 SuperstarCard.Name,
                 SuperstarCard.Name, 
@@ -115,20 +120,26 @@ public class Player
     public DamageResult ReceiveReversableDamage(NormalCard damageCard, string playedAs)
     {
         int modifiedDamage = SuperstarCard.Ability.ModifyIncomingDamage(int.Parse(damageCard.Damage));
-        List<NormalCard> overturnedCards = new List<NormalCard>();
-        NormalCard reversalCard = new NullCard();
+        ReversalOutcome reversalOutcome = CheckCardByCard(damageCard, playedAs, modifiedDamage);
+
+        return new DamageResult(reversalOutcome.OverturnedCards, modifiedDamage, reversalOutcome.ReversalCard);
+    }
+
+    private ReversalOutcome CheckCardByCard(NormalCard damageCard, string playedAs, int modifiedDamage)
+    {
+        ReversalOutcome reversalOutcome = new ReversalOutcome();
 
         for (var i = 0; i < modifiedDamage && _deck.Count > 0; i++)
         {
             NormalCard overturnedCard = RemoveTopCardFromDeck();
             AddCardToRingside(overturnedCard);
-            overturnedCards.Add(overturnedCard);
+            reversalOutcome.OverturnedCards.Add(overturnedCard);
             if (!CanCardBeReversed(overturnedCard, damageCard, playedAs)) continue;
-            reversalCard = overturnedCard;
+            reversalOutcome.ReversalCard = overturnedCard;
             break;
         }
 
-        return new DamageResult(overturnedCards, modifiedDamage, reversalCard);
+        return reversalOutcome;
     }
 
     private bool CanCardBeReversed(NormalCard overturnedCard, NormalCard damageCard, string playedAs)

@@ -20,7 +20,7 @@ public class ReversalJockeyingForPositionEffect : ReversalEffect
     public override void ApplyEffect(NormalCard selectedCard, Player otherPlayer, Player playingPlayer, View view)
     {
         SelectedEffect selectedEffect = 
-            view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.SuperstarCard.Name);
+            view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.GetSuperstarName());
         PlaySelectedEffect(selectedEffect, playingPlayer, otherPlayer);
         
         playingPlayer.RemoveCardFromHand(selectedCard);

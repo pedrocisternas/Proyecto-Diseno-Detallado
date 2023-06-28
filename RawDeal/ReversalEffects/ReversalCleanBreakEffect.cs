@@ -22,6 +22,6 @@ public class ReversalCleanBreakEffect : ReversalEffect
         activePlayer.DiscardCardsFromHand(4, view);
         opponentPlayer.DrawCards();
 
-        view.SayThatPlayerDrawCards(opponentPlayer.SuperstarCard.Name, 1);
+        view.SayThatPlayerDrawCards(opponentPlayer.GetSuperstarName(), 1);
     }
 }

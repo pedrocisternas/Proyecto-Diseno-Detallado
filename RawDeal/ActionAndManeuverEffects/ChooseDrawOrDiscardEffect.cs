@@ -18,7 +18,7 @@ public class ChooseDrawOrDiscardEffect : IActionAndManeuverEffect
     public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
     {
         SelectedEffect selectedEffect = 
-            view.AskUserToChooseBetweenDrawingOrForcingOpponentToDiscardCards(playingPlayer.SuperstarCard.Name);
+            view.AskUserToChooseBetweenDrawingOrForcingOpponentToDiscardCards(playingPlayer.GetSuperstarName());
         PlaySelectedEffect(selectedEffect, playingPlayer, otherPlayer, view);
         
         playingPlayer.RemoveCardFromHand(selectedCard); 
@@ -41,8 +41,8 @@ public class ChooseDrawOrDiscardEffect : IActionAndManeuverEffect
     private void DrawCards(Player playingPlayer, View view)
     {
         int cardsToDraw = _exact ? _numberOfCards : 
-            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.SuperstarCard.Name, _numberOfCards);
-        view.SayThatPlayerDrawCards(playingPlayer.SuperstarCard.Name, cardsToDraw);
+            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.GetSuperstarName(), _numberOfCards);
+        view.SayThatPlayerDrawCards(playingPlayer.GetSuperstarName(), cardsToDraw);
         
         AddCardsToPlayerHandFromDeck(playingPlayer, cardsToDraw);
     }

@@ -18,7 +18,7 @@ public class StoneColdSteveAustinAbility : BaseSuperstarAbility
     
     private void AnnounceAbilityUsage(Player activePlayer, View view)
     {
-        view.SayThatPlayerIsGoingToUseHisAbility(activePlayer.SuperstarCard.Name, 
+        view.SayThatPlayerIsGoingToUseHisAbility(activePlayer.GetSuperstarName(), 
             activePlayer.SuperstarCard.SuperstarAbility);
     }
 
@@ -26,7 +26,7 @@ public class StoneColdSteveAustinAbility : BaseSuperstarAbility
     {
         NormalCard drawnCard = activePlayer.RemoveTopCardFromDeck();
         activePlayer.AddCardToHand(drawnCard);
-        view.SayThatPlayerDrawCards(activePlayer.SuperstarCard.Name, 1);
+        view.SayThatPlayerDrawCards(activePlayer.GetSuperstarName(), 1);
     }
 
     private void ReturnCardFromHandToDeck(Player activePlayer, View view)
@@ -34,7 +34,7 @@ public class StoneColdSteveAustinAbility : BaseSuperstarAbility
         List<string> formattedCardsInHand = CardUtils.GetFormattedCards(activePlayer.GetHandCards());
         int chosenCardId = 
             view.AskPlayerToReturnOneCardFromHisHandToHisArsenal(
-                activePlayer.SuperstarCard.Name, formattedCardsInHand);
+                activePlayer.GetSuperstarName(), formattedCardsInHand);
         NormalCard selectedCard = activePlayer.GetACardFromHand(chosenCardId);
         MoveCardFromHandToDeck(activePlayer, selectedCard);
     }

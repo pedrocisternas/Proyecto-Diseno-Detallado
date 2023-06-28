@@ -10,7 +10,6 @@ public class CardPlayer
     private readonly Player _activePlayer;
     private readonly Player _opponentPlayer;
     private readonly GamePresenter _gamePresenter;
-    private readonly PlayerManager _playerManager;
     private readonly ReversalCardPlayer _reversalManager;
     private readonly Action _endTurnCallback;
     private readonly Action<string> _endGameAndCongratulateWinner;
@@ -19,7 +18,6 @@ public class CardPlayer
         Action endTurnCallback, Action<string> endGameAndCongratulateWinner)
     {
         _view = view;
-        _playerManager = playerManager;
         _activePlayer = playerManager.GetActivePlayer();
         _opponentPlayer = playerManager.GetOpponentPlayer();
         _reversalManager = new ReversalCardPlayer(playerManager, _view);
@@ -88,7 +86,6 @@ public class CardPlayer
         NormalCard modifiedSelectedCard = selectedCard.CloneWithModifiedDamage(_activePlayer);
         
         ApplyEffects(selectedCard, selectedCard.ManeuverEffects);
-
         _activePlayer.IncreaseFortitude(int.Parse(selectedCard.Damage));
         
         DamageResult damageResult = 
@@ -97,7 +94,7 @@ public class CardPlayer
         ReceiveDamageAndOrReverse(selectedCard, damageResult);
         BonusRemoval();
     }
-    
+
     private void ApplyEffects(NormalCard selectedCard, List<IActionAndManeuverEffect> effects)
     {
         foreach (var effect in effects)
@@ -133,7 +130,7 @@ public class CardPlayer
     {
         if (CheckConditionPinVictory(damageResult))
         {
-            _endGameAndCongratulateWinner(_activePlayer.SuperstarCard.Name);
+            _endGameAndCongratulateWinner(_activePlayer.GetSuperstarName());
         }
     }
 

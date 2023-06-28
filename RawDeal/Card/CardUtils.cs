@@ -76,22 +76,33 @@ public static class CardUtils
 
         return applicableReversalCards;
     }
-    
+
     public static int SelectCardToPlay(List<(NormalCard card, string type)> playableCardsWithType, View view)
     {
-        List<string> playableCardStrings = playableCardsWithType.Select(cardWithType =>
+        List<string> playableCardStrings = FormatCards(playableCardsWithType);
+
+        int chosenCardIndex = view.AskUserToSelectAPlay(playableCardStrings);
+
+        return chosenCardIndex;
+    }
+    
+    public static List<string> FormatReversalCards(List<NormalCard> reversalCards)
+    {
+        List<(NormalCard card, string type)> reversalCardsWithType = reversalCards.Select(card => (card, "REVERSAL")).ToList();
+        return FormatCards(reversalCardsWithType);
+    }
+
+    private static List<string> FormatCards(List<(NormalCard card, string type)> cardsWithType)
+    {
+        return cardsWithType.Select(cardWithType =>
         {
             IViewableCardInfo cardInfo = cardWithType.card;
             string playedAs = cardWithType.type.ToUpper();
             PlayInfo playInfo = new PlayInfo(cardInfo, playedAs);
             return Formatter.PlayToString(playInfo);
         }).ToList();
-
-        int chosenCardIndex = view.AskUserToSelectAPlay(playableCardStrings);
-
-        return chosenCardIndex;
     }
-
+    
     private static List<NormalCard> GetAffordableCards(Player player, int additionalFortitude)
     {
         var handCards = player.GetHandCards();

@@ -45,7 +45,7 @@ public class PlayerManager
     {
         Deck deck = new Deck(deckPath);
 
-        if (!deck.IsValid())
+        if (!deck.CheckIfIsValid())
         {
             _view.SayThatDeckIsInvalid();
             throw new InvalidDeckException("El mazo no es válido.");

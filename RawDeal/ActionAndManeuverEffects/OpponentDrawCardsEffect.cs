@@ -13,6 +13,6 @@ public class OpponentDrawCardsEffect : IActionAndManeuverEffect
             NormalCard card = otherPlayer.RemoveTopCardFromDeck();
             otherPlayer.AddCardToHand(card);
         }
-        view.SayThatPlayerDrawCards(otherPlayer.SuperstarCard.Name, cardsToDraw);
+        view.SayThatPlayerDrawCards(otherPlayer.GetSuperstarName(), cardsToDraw);
     }
 }

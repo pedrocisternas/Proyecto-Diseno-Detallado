@@ -17,11 +17,11 @@ public class DiscardAndObtainRingsideCards : IActionAndManeuverEffect
         var numberOfCardsInHand = playingPlayer.GetDeckCount();
         if (numberOfCardsInHand is > 0 and <= 2)
         {
-            return view.AskHowManyCardsToDiscard(playingPlayer.SuperstarCard.Name, numberOfCardsInHand);
+            return view.AskHowManyCardsToDiscard(playingPlayer.GetSuperstarName(), numberOfCardsInHand);
         }
 
         return numberOfCardsInHand > 2 ? 
-            view.AskHowManyCardsToDiscard(playingPlayer.SuperstarCard.Name, 2) : 0;
+            view.AskHowManyCardsToDiscard(playingPlayer.GetSuperstarName(), 2) : 0;
     }
     
     public void PassCardsFromRingsideToHand(Player playingPlayer, int cardsToDiscard, View view)
@@ -33,7 +33,7 @@ public class DiscardAndObtainRingsideCards : IActionAndManeuverEffect
                 Formatter.CardToString(card)).ToList();
 
             int chosenCardIndex = view.AskPlayerToSelectCardsToPutInHisHand(
-                playingPlayer.SuperstarCard.Name,
+                playingPlayer.GetSuperstarName(),
                 cardsToDiscard - i, cardsString);
             playingPlayer.RemoveCardFromRingside(cardsThatMightBeAdded[chosenCardIndex]);
             playingPlayer.AddCardToHand(cardsThatMightBeAdded[chosenCardIndex]);

@@ -14,7 +14,7 @@ public class PlayerCanDrawCardsEffect : IActionAndManeuverEffect
     public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
     {
         int cardsWantedToDraw = 
-            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.SuperstarCard.Name, _numberOfCards);
+            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.GetSuperstarName(), _numberOfCards);
         int cardsInDeck = playingPlayer.GetDeckCount();
         int cardsToDraw = Math.Min(cardsInDeck, cardsWantedToDraw);
 
@@ -22,7 +22,7 @@ public class PlayerCanDrawCardsEffect : IActionAndManeuverEffect
         {
             DrawCards(playingPlayer, cardsToDraw);
         }
-        view.SayThatPlayerDrawCards(playingPlayer.SuperstarCard.Name, cardsToDraw);
+        view.SayThatPlayerDrawCards(playingPlayer.GetSuperstarName(), cardsToDraw);
     }
 
     private void DrawCards(Player player, int cardsToDraw)

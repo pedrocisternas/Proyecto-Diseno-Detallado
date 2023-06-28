@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDealView/RawDealView.csproj": {}
+    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDealView/RawDealView.csproj": {}
   },
   "projects": {
-    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDealView/RawDealView.csproj": {
+    "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDealView/RawDealView.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDealView/RawDealView.csproj",
+        "projectUniqueName": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDealView/RawDealView.csproj",
         "projectName": "RawDealView",
-        "projectPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDealView/RawDealView.csproj",
+        "projectPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDealView/RawDealView.csproj",
         "packagesPath": "/Users/pedrocisternas/.nuget/packages/",
-        "outputPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal 2/RawDealView/obj/",
+        "outputPath": "/Users/pedrocisternas/Repositories/Semestre 7/RawDeal/RawDealView/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/pedrocisternas/.nuget/NuGet/NuGet.Config"

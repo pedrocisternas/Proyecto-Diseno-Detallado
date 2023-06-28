@@ -19,6 +19,6 @@ public class ReversalInterferesEffect : ReversalEffect
     public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
     {
         opponentPlayer.DrawCards(_cardsToDiscard);
-        view.SayThatPlayerDrawCards(opponentPlayer.SuperstarCard.Name, _cardsToDiscard);
+        view.SayThatPlayerDrawCards(opponentPlayer.GetSuperstarName(), _cardsToDiscard);
     }
 }
