@@ -15,10 +15,12 @@ public class BonusDamageEffect : IActionAndManeuverEffect
         _quantity = quantity;
     }
     
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         playingPlayer.RemoveCardFromHand(selectedCard);
         playingPlayer.AddCardToRingArea(selectedCard);
-        playingPlayer.AddBonus(new Bonus(_applyTo, _value, "Damage", _quantity, "Next"));
+        playingPlayer.AddBonus(new Bonus(_applyTo, _value, "Damage", 
+            _quantity, "Next"));
     }
 }

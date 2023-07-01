@@ -5,7 +5,8 @@ namespace RawDeal;
 
 public class JockeyingForPositionEffect : IActionAndManeuverEffect
 {
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         SelectedEffect selectedEffect = 
             view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.GetSuperstarName());

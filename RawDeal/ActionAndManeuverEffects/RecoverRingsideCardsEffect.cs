@@ -13,7 +13,8 @@ public class RecoverRingsideCardsEffect : IActionAndManeuverEffect
         _numberOfCardsToDraw = numberOfCardsToDraw;
     }
     
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         MoveCardsFromRingsideToDeck(playingPlayer, view);
         if (_numberOfCardsToDraw > 0)
@@ -27,7 +28,8 @@ public class RecoverRingsideCardsEffect : IActionAndManeuverEffect
     {
         for (int i = 0; i < _numberOfRingsideCards; i++)
         {
-            List<string> formattedCards = CardUtils.GetFormattedCards(playingPlayer.GetRingsideCards());
+            List<string> formattedCards = CardUtils.GetFormattedCards(
+                playingPlayer.GetRingsideCards());
             int chosenCardId = 
                 view.AskPlayerToSelectCardsToRecover(playingPlayer.GetSuperstarName(), 
                     _numberOfRingsideCards - i, formattedCards);

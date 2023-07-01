@@ -34,18 +34,21 @@ public class CardPlayer
 
         if (chosenCardIndex != -1)
         {
-            (NormalCard selectedCard, string selectedType) = playableCardsWithType[chosenCardIndex];
+            (NormalCard selectedCard, string selectedType) = 
+                playableCardsWithType[chosenCardIndex];
             PlaySelectedCard(selectedCard, selectedType);
         }
     }
 
     private void PlaySelectedCard(NormalCard selectedCard, string selectedType)
     {
-        _gamePresenter.DisplayPlayerIsTryingToPlayCard(selectedCard, selectedType, _activePlayer, _opponentPlayer);
+        _gamePresenter.DisplayPlayerIsTryingToPlayCard(selectedCard, selectedType, 
+            _activePlayer, _opponentPlayer);
         NormalCard modifiedSelectedCard = selectedCard.CloneWithModifiedDamage(_activePlayer);
         NormalCard reversalCard = 
             modifiedSelectedCard.CanBeReversed ? 
-                _reversalManager.TryOpponentReversal(modifiedSelectedCard, selectedType) : new NullCard();
+                _reversalManager.TryOpponentReversal(modifiedSelectedCard, selectedType) : 
+                new NullCard();
 
         if (!(reversalCard is NullCard))
         {

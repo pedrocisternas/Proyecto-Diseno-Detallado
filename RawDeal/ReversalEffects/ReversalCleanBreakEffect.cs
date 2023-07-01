@@ -17,7 +17,8 @@ public class ReversalCleanBreakEffect : ReversalEffect
         return cardToReverse.Title == _targetTitle;
     }
     
-    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
+    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, 
+        Player opponentPlayer, View view)
     {
         activePlayer.DiscardCardsFromHand(4, view);
         opponentPlayer.DrawCards();

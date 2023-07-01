@@ -30,7 +30,8 @@ public static class CardUtils
         return playableCards;
     }
 
-    private static bool TryAddModifiedPlayableCards(Player player, NormalCard card, string type, List<(NormalCard, string)> playableCards)
+    private static bool TryAddModifiedPlayableCards(Player player, NormalCard card, 
+        string type, List<(NormalCard, string)> playableCards)
     {
         bool canPlayModified = false;
         foreach (var effect in card.SpecialEffects)
@@ -47,7 +48,8 @@ public static class CardUtils
         return canPlayModified;
     }
 
-    private static void TryAddNormalPlayableCard(Player player, NormalCard card, string type, List<(NormalCard, string)> playableCards)
+    private static void TryAddNormalPlayableCard(Player player, NormalCard card, 
+        string type, List<(NormalCard, string)> playableCards)
     {
         if (CanPlayAsActionOrManeuver(type) && CanPlayCard(player, card))
         {
@@ -65,7 +67,8 @@ public static class CardUtils
         return int.Parse(card.Fortitude) <= player.GetFortitude() && CanPlayCard(card, player);
     }
 
-    public static List<NormalCard> GetReversalCards(Player player, NormalCard cardToReverse, string playedAs)
+    public static List<NormalCard> GetReversalCards(Player player, NormalCard cardToReverse, 
+        string playedAs)
     {
         int additionalFortitude = player.CalculateAdditionalFortitude(cardToReverse);
     
@@ -77,7 +80,8 @@ public static class CardUtils
         return applicableReversalCards;
     }
 
-    public static int SelectCardToPlay(List<(NormalCard card, string type)> playableCardsWithType, View view)
+    public static int SelectCardToPlay(List<(NormalCard card, string type)> playableCardsWithType,
+        View view)
     {
         List<string> playableCardStrings = FormatCards(playableCardsWithType);
 
@@ -88,7 +92,8 @@ public static class CardUtils
     
     public static List<string> FormatReversalCards(List<NormalCard> reversalCards)
     {
-        List<(NormalCard card, string type)> reversalCardsWithType = reversalCards.Select(card => (card, "REVERSAL")).ToList();
+        List<(NormalCard card, string type)> reversalCardsWithType = reversalCards.
+            Select(card => (card, "REVERSAL")).ToList();
         return FormatCards(reversalCardsWithType);
     }
 
@@ -108,8 +113,8 @@ public static class CardUtils
         var handCards = player.GetHandCards();
 
         return handCards
-            .Where(card => int.Parse(card.Fortitude) + additionalFortitude <= player.GetFortitude())
-            .ToList();
+            .Where(card => int.Parse(card.Fortitude) + additionalFortitude <= player.
+                GetFortitude()).ToList();
     }
 
     private static List<NormalCard> GetApplicableReversalCards(List<NormalCard> affordableCards, 

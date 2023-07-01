@@ -119,13 +119,16 @@ public class Player
 
     public DamageResult ReceiveReversableDamage(NormalCard damageCard, string playedAs)
     {
-        int modifiedDamage = SuperstarCard.Ability.ModifyIncomingDamage(int.Parse(damageCard.Damage));
+        int modifiedDamage = SuperstarCard.Ability.
+            ModifyIncomingDamage(int.Parse(damageCard.Damage));
         ReversalOutcome reversalOutcome = CheckCardByCard(damageCard, playedAs, modifiedDamage);
 
-        return new DamageResult(reversalOutcome.OverturnedCards, modifiedDamage, reversalOutcome.ReversalCard);
+        return new DamageResult(reversalOutcome.OverturnedCards, 
+            modifiedDamage, reversalOutcome.ReversalCard);
     }
 
-    private ReversalOutcome CheckCardByCard(NormalCard damageCard, string playedAs, int modifiedDamage)
+    private ReversalOutcome CheckCardByCard(NormalCard damageCard, 
+        string playedAs, int modifiedDamage)
     {
         ReversalOutcome reversalOutcome = new ReversalOutcome();
 
@@ -142,7 +145,8 @@ public class Player
         return reversalOutcome;
     }
 
-    private bool CanCardBeReversed(NormalCard overturnedCard, NormalCard damageCard, string playedAs)
+    private bool CanCardBeReversed(NormalCard overturnedCard, 
+        NormalCard damageCard, string playedAs)
     {
         return overturnedCard.CanReverse(damageCard, playedAs) 
                && int.Parse(overturnedCard.Fortitude) 
@@ -168,7 +172,8 @@ public class Player
 
     public DamageResult ReceiveDirectDamage(int damage, bool isReversal = false)
     {
-        int modifiedDamage = isReversal ? SuperstarCard.Ability.ModifyIncomingDamage(damage) : damage;
+        int modifiedDamage = isReversal ? SuperstarCard.Ability.
+            ModifyIncomingDamage(damage) : damage;
         List<NormalCard> overturnedCards = OverturnCards(modifiedDamage);
 
         return new DamageResult(overturnedCards, modifiedDamage, new NullCard());

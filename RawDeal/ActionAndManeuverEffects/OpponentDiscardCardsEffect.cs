@@ -12,7 +12,8 @@ public class OpponentDiscardCardsEffect : IActionAndManeuverEffect
         _numberOfCards = numberOfCards;
     }
 
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         for (int i = 0; i < _numberOfCards; i++)
         {

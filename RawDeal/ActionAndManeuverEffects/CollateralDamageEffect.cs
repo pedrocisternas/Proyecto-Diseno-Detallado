@@ -21,9 +21,11 @@ public class CollateralDamageEffect : IActionAndManeuverEffect
         }
     }
 
-    private void ShowDamageAndOverturnedCards(Player playingPlayer, View view, DamageResult damageResult)
+    private void ShowDamageAndOverturnedCards(Player playingPlayer, View view, 
+        DamageResult damageResult)
     {
-        view.SayThatSuperstarWillTakeSomeDamage(playingPlayer.GetSuperstarName(), damageResult.AppliedDamage);
+        view.SayThatSuperstarWillTakeSomeDamage(playingPlayer.GetSuperstarName(), 
+            damageResult.AppliedDamage);
         
         for (int i = 0; i < damageResult.OverturnedCards.Count; i++)
         {
@@ -32,7 +34,8 @@ public class CollateralDamageEffect : IActionAndManeuverEffect
         }
     }
 
-    private void ShowOverturnedCardInfo(NormalCard overturnedCard, int currentIndex, int damage, View view)
+    private void ShowOverturnedCardInfo(NormalCard overturnedCard, int currentIndex, int damage, 
+        View view)
     {
         IViewableCardInfo cardInfo = overturnedCard;
         string formattedCardInfo = Formatter.CardToString(cardInfo);

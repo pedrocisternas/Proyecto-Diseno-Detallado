@@ -25,14 +25,17 @@ public class GamePresenter
         _view.ShowGameInfo(activePlayerInfo, opponentPlayerInfo);
     }
     
-    public void ShowCardsWithFormat(CardSet setOfCards, Player activePlayer, Player opponentPlayer)
+    public void ShowCardsWithFormat(CardSet setOfCards, 
+        Player activePlayer, Player opponentPlayer)
     {
-        List<NormalCard> cardsToFormat = GetCardsByCardSet(setOfCards, activePlayer, opponentPlayer);
+        List<NormalCard> cardsToFormat = GetCardsByCardSet(setOfCards, 
+            activePlayer, opponentPlayer);
         List<string> formattedCards = CardUtils.GetFormattedCards(cardsToFormat);
         _view.ShowCards(formattedCards);
     }
     
-    private List<NormalCard> GetCardsByCardSet(CardSet setOfCards, Player activePlayer, Player opponentPlayer)
+    private List<NormalCard> GetCardsByCardSet(CardSet setOfCards, 
+        Player activePlayer, Player opponentPlayer)
     {
         Dictionary<CardSet, Func<List<NormalCard>>> cardSetMapping = 
             new Dictionary<CardSet, Func<List<NormalCard>>>
@@ -51,7 +54,8 @@ public class GamePresenter
     {
         if (damageResult.AppliedDamage > 0)
         {
-            _view.SayThatSuperstarWillTakeSomeDamage(player.GetSuperstarName(), damageResult.AppliedDamage);
+            _view.SayThatSuperstarWillTakeSomeDamage(player.
+                GetSuperstarName(), damageResult.AppliedDamage);
             for (int i = 0; i < damageResult.OverturnedCards.Count; i++)
             {
                 NormalCard overturnedCard = damageResult.OverturnedCards[i];
@@ -83,7 +87,8 @@ public class GamePresenter
         }
         else
         {
-            _view.SayThatPlayerIsTryingToPlayThisCard(activePlayer.GetSuperstarName(), formattedPlay);
+            _view.SayThatPlayerIsTryingToPlayThisCard(activePlayer.
+                GetSuperstarName(), formattedPlay);
         }
     }
 }

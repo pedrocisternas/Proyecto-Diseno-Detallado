@@ -11,10 +11,12 @@ public class PlayerCanDrawCardsEffect : IActionAndManeuverEffect
         _numberOfCards = numberOfCards;
     }
     
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         int cardsWantedToDraw = 
-            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.GetSuperstarName(), _numberOfCards);
+            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.
+                GetSuperstarName(), _numberOfCards);
         int cardsInDeck = playingPlayer.GetDeckCount();
         int cardsToDraw = Math.Min(cardsInDeck, cardsWantedToDraw);
 

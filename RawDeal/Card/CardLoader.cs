@@ -15,7 +15,8 @@ public static class CardLoader
     public static List<SuperstarCard> LoadAllSuperstarCards(string superstarJsonPath)
     {
         string jsonSuperstars = File.ReadAllText(superstarJsonPath);
-        List<SuperstarCard> allSuperstars = JsonSerializer.Deserialize<List<SuperstarCard>>(jsonSuperstars);
+        List<SuperstarCard> allSuperstars = JsonSerializer.
+            Deserialize<List<SuperstarCard>>(jsonSuperstars);
         return allSuperstars;
     }
 }

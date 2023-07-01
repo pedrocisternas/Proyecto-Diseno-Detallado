@@ -6,7 +6,8 @@ public class DamageResult
     public int AppliedDamage { get; }
     public NormalCard ReversalCard { get; }
 
-    public DamageResult(List<NormalCard> overturnedCards, int appliedDamage, NormalCard reversalCard)
+    public DamageResult(List<NormalCard> overturnedCards, int appliedDamage, 
+        NormalCard reversalCard)
     {
         OverturnedCards = overturnedCards;
         AppliedDamage = appliedDamage;

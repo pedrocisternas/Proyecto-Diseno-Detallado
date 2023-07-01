@@ -10,7 +10,8 @@ public class TheRockAbility : BaseSuperstarAbility
         {
             List<string> formattedCards = CardUtils.GetFormattedCards(activePlayer.GetRingsideCards());
             int chosenCardId = 
-                view.AskPlayerToSelectCardsToRecover(activePlayer.GetSuperstarName(), 1, formattedCards);
+                view.AskPlayerToSelectCardsToRecover(activePlayer.
+                    GetSuperstarName(), 1, formattedCards);
             NormalCard selectedCard = activePlayer.GetACardFromRingside(chosenCardId);
             MoveCardFromRingsideToDeck(activePlayer, selectedCard);
         }

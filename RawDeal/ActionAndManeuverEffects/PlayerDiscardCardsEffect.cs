@@ -4,7 +4,8 @@ namespace RawDeal;
 
 public class PlayerDiscardCardsEffect : IActionAndManeuverEffect
 {
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         if (playingPlayer.GetHandCards().Count > 0)
         {

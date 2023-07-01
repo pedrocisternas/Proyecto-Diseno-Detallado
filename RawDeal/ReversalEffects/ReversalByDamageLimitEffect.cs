@@ -16,7 +16,8 @@ public class ReversalByDamageLimitEffect : ReversalEffect
         return int.Parse(cardToReverse.Damage) <= _damageLimit;
     }
     
-    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
+    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, 
+        Player opponentPlayer, View view)
     {
     }
 }

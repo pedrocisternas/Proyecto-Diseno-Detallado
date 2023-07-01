@@ -29,7 +29,8 @@ public class UndertakerAbility : BaseSuperstarAbility
         }
     }
 
-    private NormalCard PromptPlayerToDiscardCard(Player activePlayer, View view, int remainingCardsToDiscard)
+    private NormalCard PromptPlayerToDiscardCard(Player activePlayer, 
+        View view, int remainingCardsToDiscard)
     {
         List<string> formattedCards = CardUtils.GetFormattedCards(activePlayer.GetHandCards());
         int chosenCardId = 
@@ -42,7 +43,8 @@ public class UndertakerAbility : BaseSuperstarAbility
 
     private void MoveCardFromRingsideToHand(Player activePlayer, View view)
     {
-        List<string> formattedRingsideCards = CardUtils.GetFormattedCards(activePlayer.GetRingsideCards());
+        List<string> formattedRingsideCards = CardUtils.
+            GetFormattedCards(activePlayer.GetRingsideCards());
         int chosenRingsideCardId = 
             view.AskPlayerToSelectCardsToPutInHisHand(
                 activePlayer.GetSuperstarName(), 1, formattedRingsideCards);

@@ -17,7 +17,8 @@ public class ReversalJockeyingForPositionEffect : ReversalEffect
         return cardToReverse.Title == _targetTitle;
     }
     
-    public override void ApplyEffect(NormalCard selectedCard, Player otherPlayer, Player playingPlayer, View view)
+    public override void ApplyEffect(NormalCard selectedCard, Player otherPlayer, 
+        Player playingPlayer, View view)
     {
         SelectedEffect selectedEffect = 
             view.AskUserToSelectAnEffectForJockeyForPosition(playingPlayer.GetSuperstarName());
@@ -27,7 +28,8 @@ public class ReversalJockeyingForPositionEffect : ReversalEffect
         playingPlayer.AddCardToRingArea(selectedCard);
     }
 
-    private void PlaySelectedEffect(SelectedEffect selectedEffect, Player playingPlayer, Player otherPlayer)
+    private void PlaySelectedEffect(SelectedEffect selectedEffect, 
+        Player playingPlayer, Player otherPlayer)
     {
         if (selectedEffect == SelectedEffect.NextGrappleIsPlus4D)
         {

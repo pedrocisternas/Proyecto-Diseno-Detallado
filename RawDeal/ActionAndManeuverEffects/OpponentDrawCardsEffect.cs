@@ -4,7 +4,8 @@ namespace RawDeal;
 
 public class OpponentDrawCardsEffect : IActionAndManeuverEffect
 {
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         int cardsInDeck = otherPlayer.GetDeckCount();
         int cardsToDraw = 1 > cardsInDeck ? cardsInDeck : 1;

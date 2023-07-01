@@ -31,7 +31,8 @@ public class StoneColdSteveAustinAbility : BaseSuperstarAbility
 
     private void ReturnCardFromHandToDeck(Player activePlayer, View view)
     {
-        List<string> formattedCardsInHand = CardUtils.GetFormattedCards(activePlayer.GetHandCards());
+        List<string> formattedCardsInHand = CardUtils.GetFormattedCards(
+            activePlayer.GetHandCards());
         int chosenCardId = 
             view.AskPlayerToReturnOneCardFromHisHandToHisArsenal(
                 activePlayer.GetSuperstarName(), formattedCardsInHand);

@@ -18,7 +18,8 @@ public class ReversalBySubtypeEffect : ReversalEffect
         return playedAs == _targetType && cardToReverse.Subtypes.Contains(_targetSubtype);
     }
     
-    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
+    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, 
+        Player opponentPlayer, View view)
     {
     }
 }

@@ -14,7 +14,8 @@ public class ReversalIrishWhipEffect : ReversalEffect
     {
         return cardToReverse.Title == _targetTitle;
     }
-    public override void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public override void ApplyEffect(NormalCard selectedCard, Player playingPlayer, 
+        Player otherPlayer, View view)
     {
         otherPlayer.RemoveCardFromHand(selectedCard);
         otherPlayer.AddCardToRingArea(selectedCard);

@@ -9,7 +9,8 @@ public class SuperstarCard
     public string SuperstarAbility { get; }
     public ISuperstarAbility Ability { get; }
 
-    public SuperstarCard(string name, string logo, int handSize, int superstarValue, string superstarAbility)
+    public SuperstarCard(string name, string logo, int handSize, int superstarValue, 
+        string superstarAbility)
     {
         Name = name;
         Logo = logo;

@@ -16,7 +16,8 @@ public class ReversalInterferesEffect : ReversalEffect
         return playedAs == "Maneuver";
     }
 
-    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
+    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, 
+        Player opponentPlayer, View view)
     {
         opponentPlayer.DrawCards(_cardsToDiscard);
         view.SayThatPlayerDrawCards(opponentPlayer.GetSuperstarName(), _cardsToDiscard);

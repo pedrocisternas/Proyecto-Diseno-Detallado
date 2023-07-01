@@ -16,7 +16,8 @@ public class ReversalByTypeEffect : ReversalEffect
         return playedAs == _targetType;
     }
 
-    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, Player opponentPlayer, View view)
+    public override void ApplyEffect(NormalCard reversalCard, Player activePlayer, 
+        Player opponentPlayer, View view)
     {
     }
 }

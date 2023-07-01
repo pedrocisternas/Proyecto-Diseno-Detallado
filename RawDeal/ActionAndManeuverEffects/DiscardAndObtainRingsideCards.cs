@@ -5,7 +5,8 @@ namespace RawDeal;
 
 public class DiscardAndObtainRingsideCards : IActionAndManeuverEffect
 {
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         var numberOfCardsToDiscard = AskHowManyCards(playingPlayer, view);
         playingPlayer.DiscardCardsFromHand(numberOfCardsToDiscard, view);
@@ -17,7 +18,8 @@ public class DiscardAndObtainRingsideCards : IActionAndManeuverEffect
         var numberOfCardsInHand = playingPlayer.GetDeckCount();
         if (numberOfCardsInHand is > 0 and <= 2)
         {
-            return view.AskHowManyCardsToDiscard(playingPlayer.GetSuperstarName(), numberOfCardsInHand);
+            return view.AskHowManyCardsToDiscard(playingPlayer.GetSuperstarName(), 
+                numberOfCardsInHand);
         }
 
         return numberOfCardsInHand > 2 ? 

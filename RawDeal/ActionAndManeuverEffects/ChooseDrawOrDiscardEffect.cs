@@ -15,18 +15,22 @@ public class ChooseDrawOrDiscardEffect : IActionAndManeuverEffect
         _exact = exact;
     }
     
-    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, View view)
+    public void ApplyEffect(NormalCard selectedCard, Player playingPlayer, Player otherPlayer, 
+        View view)
     {
         SelectedEffect selectedEffect = 
-            view.AskUserToChooseBetweenDrawingOrForcingOpponentToDiscardCards(playingPlayer.GetSuperstarName());
+            view.AskUserToChooseBetweenDrawingOrForcingOpponentToDiscardCards(
+                playingPlayer.GetSuperstarName());
         PlaySelectedEffect(selectedEffect, playingPlayer, otherPlayer, view);
         
         playingPlayer.RemoveCardFromHand(selectedCard); 
         playingPlayer.AddCardToRingArea(selectedCard);
-        playingPlayer.AddBonus(new Bonus("Subtype", "Strike", "Damage", 5, "Next"));
+        playingPlayer.AddBonus(new Bonus("Subtype", "Strike", "Damage", 
+            5, "Next"));
     }
     
-    private void PlaySelectedEffect(SelectedEffect selectedEffect, Player playingPlayer, Player otherPlayer, View view)
+    private void PlaySelectedEffect(SelectedEffect selectedEffect, Player playingPlayer, 
+        Player otherPlayer, View view)
     {
         if (selectedEffect == SelectedEffect.DrawCards)
         {
@@ -41,7 +45,8 @@ public class ChooseDrawOrDiscardEffect : IActionAndManeuverEffect
     private void DrawCards(Player playingPlayer, View view)
     {
         int cardsToDraw = _exact ? _numberOfCards : 
-            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.GetSuperstarName(), _numberOfCards);
+            view.AskHowManyCardsToDrawBecauseOfACardEffect(playingPlayer.
+                GetSuperstarName(), _numberOfCards);
         view.SayThatPlayerDrawCards(playingPlayer.GetSuperstarName(), cardsToDraw);
         
         AddCardsToPlayerHandFromDeck(playingPlayer, cardsToDraw);

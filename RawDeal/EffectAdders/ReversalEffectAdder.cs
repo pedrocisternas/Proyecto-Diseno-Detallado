@@ -62,7 +62,8 @@ public class ReversalEffectAdder
                 _reversalEffects.Add(new ReversalCleanBreakEffect("Jockeying for Position"));
                 break;
             case "Jockeying for Position":
-                _reversalEffects.Add(new ReversalJockeyingForPositionEffect("Jockeying for Position"));
+                _reversalEffects.Add(new ReversalJockeyingForPositionEffect(
+                    "Jockeying for Position"));
                 break;
             case "Belly to Belly Suplex":
                 _reversalEffects.Add(new ReversalByTitleEffect("Belly to Belly Suplex"));
